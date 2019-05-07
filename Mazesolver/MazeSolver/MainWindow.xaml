@@ -53,8 +53,22 @@
         <Border Grid.Column="0" Grid.Row="1" BorderBrush="Black" x:Name="CanvasBorder">
             <Canvas x:Name="CanvasMaze"/>
         </Border>
-        <ScrollViewer Grid.Column="1" Grid.Row="1" x:Name="scrollViewInfo">
-            <TextBlock TextWrapping="Wrap" TextAlignment="Right" x:Name="textBlockInfo" Margin="0,0,20,0" FontSize="20"></TextBlock>
-        </ScrollViewer>
+        <Grid Grid.Column="1" Grid.Row="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="0.06*"></RowDefinition>
+            </Grid.RowDefinitions>
+            <ScrollViewer Grid.Row="0" x:Name="scrollViewInfo">
+                <TextBlock TextWrapping="Wrap" TextAlignment="Right" x:Name="textBlockInfo" Margin="0,0,20,0" FontSize="20"></TextBlock>
+            </ScrollViewer>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                    <ColumnDefinition Width="*"></ColumnDefinition>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Margin="10,10,10,0" TextAlignment="Center"> Time Between Action :</TextBlock>
+                <TextBox Grid.Column="1" Margin="10,10,10,10" x:Name="textBoxTimeSleep"></TextBox>
+            </Grid>
+        </Grid>
     </Grid>
 </Window>

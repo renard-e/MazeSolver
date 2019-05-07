@@ -31,6 +31,7 @@ namespace MazeSolver
         private String _directoryMazeName = "/map_maze/";
         private Thread _threadSolver = null;
         private Dictionary<String, ISolver> _allSolver = new Dictionary<String, ISolver>();
+        private int _timeSleep = 100;
 
         public MainWindow()
         {
@@ -58,6 +59,7 @@ namespace MazeSolver
             _tabColorsKindCell.Add(KindCell.ROAD, Colors.Green);
             _tabColorsKindCell.Add(KindCell.START, Colors.Red);
             _tabColorsKindCell.Add(KindCell.END, Colors.Blue);
+            _tabColorsKindCell.Add(KindCell.DEADEND, Colors.Gray);
         }
 
         private void button_cancel_process(object sender, RoutedEventArgs e)
@@ -205,7 +207,11 @@ namespace MazeSolver
             else
             {
                 ISolver solver = _allSolver[listViewSolver.SelectedItems[0].ToString()];
-                _threadSolver = new Thread(() => solver.runSolver(_map));
+
+                if (checkNumber(textBoxTimeSleep.Text) == false && String.IsNullOrEmpty(textBoxTimeSleep.Text.ToString()) == false)
+                    _timeSleep = int.Parse(textBoxTimeSleep.Text.ToString());
+                _state = "In progress";
+                _threadSolver = new Thread(() => solver.runSolver(_map, _timeSleep));
                 _threadSolver.Start();
             }
         }
@@ -217,6 +223,7 @@ namespace MazeSolver
             info += "Map Path : " + _map.getMapPathToFile() + "\n";
             info += "Solver Choose : " + listViewSolver.SelectedItems[0].ToString() + "\n";
             info += "State : " + _state + "\n";
+            info += "Time Sleep : " + _timeSleep + "\n";
             MessageBox.Show(info, "Infomations about MazeSolver", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 

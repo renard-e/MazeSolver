@@ -14,7 +14,8 @@ namespace MazeSolver
         END, // e
         WALL, // x
         EMPTY, // .
-        ROAD // o
+        ROAD, // o
+        DEADEND // NOTHING
     }
 
     public enum Direction
@@ -109,7 +110,7 @@ namespace MazeSolver
         {
             if (_env.ContainsKey(dir))
             {
-                if (_env[dir].GetKindCell() == KindCell.WALL)
+                if (_env[dir].GetKindCell() == KindCell.WALL || _env[dir].GetKindCell() == KindCell.DEADEND)
                     return (false);
                 return (true);
             }

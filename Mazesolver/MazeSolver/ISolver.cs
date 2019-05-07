@@ -8,7 +8,7 @@ namespace MazeSolver
 {
     interface ISolver
     {
-        void runSolver(Map map);
+        void runSolver(Map map, int timeSleepMS);
 
         String getNameSolver();
     }
