@@ -192,8 +192,11 @@ namespace MazeSolver
                 printInfo("Loading Maze at location : " + filePath, Colors.Red);
                 _map.loadMap(filePath);
                 if (_map.getMap() != null)
+                {
                     drawMap(_map);
-                printInfo("Loading Maze at location : " + filePath + " Done", Colors.Green);
+                    printInfo("Loading Maze at location : " + filePath + " Done", Colors.Green);
+                    _state = "In progress";
+                }
             }
         }
 
@@ -229,8 +232,11 @@ namespace MazeSolver
 
         public void printInfo(String str, Color color)
         {
-            textBlockInfo.Inlines.Add(new Run(str + "\n") { Foreground = new SolidColorBrush(color)});
-            scrollViewInfo.ScrollToBottom();
+            Dispatcher.Invoke(new Action(() =>
+            {
+                textBlockInfo.Inlines.Add(new Run(str + "\n") { Foreground = new SolidColorBrush(color) });
+                scrollViewInfo.ScrollToBottom();
+            }), DispatcherPriority.Background);
         }
 
         public void printInfo(Char c, Color color)
@@ -281,11 +287,8 @@ namespace MazeSolver
             {
                 Dispatcher.Invoke(new Action(() =>
                 {
-                    CanvasMaze.Children.Remove(cell.getRect());
                     cell.getRect().Fill = new SolidColorBrush(_tabColorsKindCell[cell.GetKindCell()]);
-                    CanvasMaze.Children.Add(cell.getRect());
-                    CanvasMaze.InvalidateVisual();
-                    CanvasMaze.UpdateLayout();
+                    cell.getRect().UpdateLayout();
                 }), DispatcherPriority.Background);
                 
             }

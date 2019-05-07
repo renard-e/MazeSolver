@@ -17,6 +17,12 @@ namespace MazeSolver
 
         public void runSolver(Map map, int timeSleepMS)
         {
+            findAllDeadEnd(map, timeSleepMS);
+            map.getMainWindow().setState("Finish");
+        }
+
+        private void findAllDeadEnd(Map map, int timeSleepMS)
+        {
             Boolean change = true;
 
             while (change == true)
@@ -28,15 +34,19 @@ namespace MazeSolver
                     {
                         if (cell.isDeadEnd())
                         {
-                            cell.setKindCell(KindCell.DEADEND);
-                            map.getMainWindow().updateCell(cell);
+                            changeKindCellUpdateAndWait(cell, KindCell.DEADEND, map.getMainWindow(), timeSleepMS);
                             change = true;
-                            Thread.Sleep(timeSleepMS);
                         }
                     }
                 }
             }
-            map.getMainWindow().setState("Finish");
+        }
+
+        public void changeKindCellUpdateAndWait(Cell cell, KindCell newKindCell, MainWindow win, int timeSleepMS)
+        {
+            cell.setKindCell(newKindCell);
+            win.updateCell(cell);
+            Thread.Sleep(timeSleepMS);
         }
 
         public String getNameSolver()
