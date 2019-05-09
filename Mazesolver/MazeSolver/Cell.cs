@@ -110,7 +110,7 @@ namespace MazeSolver
         {
             if (_env.ContainsKey(dir))
             {
-                if (_env[dir].GetKindCell() == KindCell.WALL || _env[dir].GetKindCell() == KindCell.DEADEND)
+                if (_env[dir].GetKindCell() == KindCell.WALL || _env[dir].GetKindCell() == KindCell.DEADEND || _env[dir].GetKindCell() == KindCell.ROAD)
                     return (false);
                 return (true);
             }
@@ -140,6 +140,16 @@ namespace MazeSolver
             return (debug);
         }
 
+        public Boolean theEndIsHere()
+        {
+            foreach (KeyValuePair<Direction, Cell> neighbor in _env)
+            {
+                if (neighbor.Value.GetKindCell() == KindCell.END)
+                    return (true);
+            }
+            return (false);
+        }
+
         public Rectangle getRect()
         {
             return (_rect);
@@ -148,6 +158,22 @@ namespace MazeSolver
         public void setRect(Rectangle rect)
         {
             _rect = rect;
+        }
+
+        public Boolean noWay()
+        {
+            if (_kindCell == KindCell.START
+                && isFreeWay(Direction.LEFT) == false
+                && isFreeWay(Direction.RIGHT) == false
+                && isFreeWay(Direction.DOWN) == false
+                && isFreeWay(Direction.UP) == false)
+                return (true);
+            return (false);
+        }
+
+        public Cell getCelldir(Direction dir)
+        {
+            return (_env[dir]);
         }
     }
 }

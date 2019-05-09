@@ -43,10 +43,10 @@ namespace MazeSolver
         }
 
         private void setMazeSolverName()
-        {
-            ISolver solver = new DeadEndFilling();
-            _allSolver.Add(solver.getNameSolver(), solver);
-            
+        {            
+            _allSolver.Add(DeadEndFilling.staticGetName(), new DeadEndFilling());
+            _allSolver.Add(BackTracking.staticGetName(), new BackTracking());
+
             foreach (KeyValuePair<String, ISolver> entry in _allSolver)
                 listViewSolver.Items.Add(entry.Key);
             listViewSolver.SelectedIndex = 0;

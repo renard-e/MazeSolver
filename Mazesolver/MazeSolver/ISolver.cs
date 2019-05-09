@@ -6,12 +6,14 @@ using System.Threading.Tasks;
 
 namespace MazeSolver
 {
-    interface ISolver
+    public interface ISolver
     {
         void runSolver(Map map, int timeSleepMS);
 
         void changeKindCellUpdateAndWait(Cell cell, KindCell newKindCell, MainWindow win, int timeSleepMS);
 
         String getNameSolver();
+
+        String startEndTimer(int opt);
     }
 }

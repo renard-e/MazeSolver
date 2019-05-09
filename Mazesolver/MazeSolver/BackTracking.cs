@@ -2,30 +2,27 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace MazeSolver
 {
-    public class DeadEndFilling : Solver
+    public class BackTracking : Solver
     {
         private Stack<Cell> _stackCell = new Stack<Cell>();
 
-        public DeadEndFilling()
+        public BackTracking()
         {
-            _name = "DeadEndFilling";
+            _name = "BackTracking";
         }
 
         public static String staticGetName()
         {
-            return ("DeadEndFilling");
+            return ("BackTracking");
         }
-
         override public void runSolver(Map map, int timeSleepMS)
         {
             startEndTimer(0);
-            findAllDeadEnd(map, timeSleepMS);
             findTheRoad(map, timeSleepMS);
             map.getMainWindow().setState("Finish");
             map.getMainWindow().printInfo("Solver Work during : " + startEndTimer(1), Colors.Green);
@@ -65,27 +62,6 @@ namespace MazeSolver
                 }
             }
             return (dirChange);
-        }
-
-        private void findAllDeadEnd(Map map, int timeSleepMS)
-        {
-            Boolean change = true;
-
-            while (change == true)
-            {
-                change = false;
-                foreach (List<Cell> listCell in map.getMap())
-                {
-                    foreach (Cell cell in listCell)
-                    {
-                        if (cell.isDeadEnd())
-                        {
-                            changeKindCellUpdateAndWait(cell, KindCell.DEADEND, map.getMainWindow(), timeSleepMS);
-                            change = true;
-                        }
-                    }
-                }
-            }
         }
     }
 }
