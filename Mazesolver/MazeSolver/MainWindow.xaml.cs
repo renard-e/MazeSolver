@@ -32,6 +32,7 @@ namespace MazeSolver
         private Thread _threadSolver = null;
         private Dictionary<String, ISolver> _allSolver = new Dictionary<String, ISolver>();
         private int _timeSleep = 100;
+        private IGenerator _gen = new ScriptGenerator();
 
         public MainWindow()
         {
@@ -81,10 +82,10 @@ namespace MazeSolver
 
             if ((checkInputMaze(x, y, fileName)) == false)
             {
-                MessageBox.Show("Error : x > 1 and y > 1 and x * y <= 2096 or the file already exists", "Error Input Map", MessageBoxButton.OK, MessageBoxImage.Warning);
-                printInfo("Error : x > 1 and y > 1 and x * y <= 2096 or the file already exists", Colors.Red);
+                MessageBox.Show("Error : x > 1 and y > 1 and x <= 69 and y <= 69 or the file already exists", "Error Input Map", MessageBoxButton.OK, MessageBoxImage.Warning);
+                printInfo("Error : x > 1 and y > 1 and x <= 69 and y <= 69 or the file already exists", Colors.Red);
             }
-            else if ((genMazeWithScript(x, y, fileName)) == false)
+            else if ((_gen.makeMaze(int.Parse(x), int.Parse(y), Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + _directoryMazeName + fileName)) == false)
             {
                 MessageBox.Show("Error : something wrong happen during the generation", "Error generate map", MessageBoxButton.OK, MessageBoxImage.Warning);
                 printInfo("Error : something wrong happened during generation", Colors.Red);
@@ -96,73 +97,11 @@ namespace MazeSolver
             }
         }
 
-        private Boolean genMazeWithScript(String x, String y, String fileName)
-        {
-            Process proc = new Process();
-
-            proc.StartInfo.FileName = "MazeGenerator.bat";
-            proc.StartInfo.WorkingDirectory = Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName;
-            proc.StartInfo.Arguments = x + " " + y + " > " + _directoryMazeName.Substring(1) + fileName;
-            proc.Start();
-            proc.WaitForExit();
-            if ((createStartAndEnd(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + _directoryMazeName + fileName)) == false)
-                return (false);
-            return (true);
-        }
-
-        private Boolean createStartAndEnd(String pathToFile)
-        {
-            try
-            {
-                StreamReader rd = new StreamReader(pathToFile);
-                Boolean first = true;
-                String allFile = String.Empty;
-
-                while (rd.Peek() >= 0)
-                {
-                    String line = rd.ReadLine();
-                    if (first == true)
-                    {
-                        allFile += line.Replace('.', 's') + "\n";
-                        first = false;
-                    }
-                    else if (rd.Peek() < 0)
-                        allFile += line.Replace('.', 'e') + "\n";
-                    else
-                        allFile += line + "\n";
-                }
-                rd.Close();
-                if ((updateFile(pathToFile, allFile)) == false)
-                    return (false);
-            }
-            catch (Exception ex)
-            {
-                return (false);
-            }
-            return (true);
-        }
-
-        private Boolean updateFile(String path, String content)
-        {
-            try
-            {
-                StreamWriter sw = new StreamWriter(path);
-
-                sw.Write(content);
-                sw.Close();
-            }
-            catch (Exception ex)
-            {
-                return (false);
-            }
-            return (true);
-        }
-
         private Boolean checkInputMaze(String x, String y, String fileName)
         {
             if (String.IsNullOrEmpty(x) || String.IsNullOrEmpty(y) || checkNumber(x) || checkNumber(y))
                 return (false);
-            if (int.Parse(x) <= 1 || int.Parse(y) <= 1 || int.Parse(x) * int.Parse(y) > 2096)
+            if (int.Parse(x) <= 1 || int.Parse(y) <= 1 || int.Parse(x) > 69 || int.Parse(y) > 69)
                 return (false);
             if (File.Exists(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + _directoryMazeName + fileName))
                 return (false);
