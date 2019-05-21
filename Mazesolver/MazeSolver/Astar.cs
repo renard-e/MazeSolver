@@ -42,7 +42,7 @@ namespace MazeSolver
                 if (cell.theEndIsHere())
                 {
                     _closedList.Push(cell);
-                    reconstrucRoad(map, timeSleepMS);
+                    reconstructRoad(map, timeSleepMS);
                     break;
                 }
                 foreach (KeyValuePair<Direction, Cell> v in cell.getEnv())
