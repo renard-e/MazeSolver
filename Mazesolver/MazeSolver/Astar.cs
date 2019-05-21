@@ -33,6 +33,7 @@ namespace MazeSolver
 
         private void solveMaze(Map map, int timeSleepMS)
         {
+            Boolean finish = false;
             _openList.Clear();
             _closedList.Clear();
             _openList.Push(map.getStartCell());
@@ -42,6 +43,7 @@ namespace MazeSolver
                 if (cell.theEndIsHere())
                 {
                     _closedList.Push(cell);
+                    finish = true;
                     reconstructRoad(map, timeSleepMS);
                     break;
                 }
@@ -61,7 +63,8 @@ namespace MazeSolver
                 }
                 _closedList.Push(cell);
             }
-            map.getMainWindow().printInfo("NO PATH FOUND IN MAP", Colors.Red);
+            if (finish != true)
+                map.getMainWindow().printInfo("NO PATH FOUND IN MAP", Colors.Red);
         }
 
         private double distance(int posVX, int posVY, int posObjX, int posObjY)
