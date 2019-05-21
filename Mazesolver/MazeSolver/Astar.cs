@@ -42,7 +42,7 @@ namespace MazeSolver
                 if (cell.theEndIsHere())
                 {
                     _closedList.Push(cell);
-                    printRoad(map, timeSleepMS);
+                    reconstrucRoad(map, timeSleepMS);
                     break;
                 }
                 foreach (KeyValuePair<Direction, Cell> v in cell.getEnv())
@@ -69,10 +69,11 @@ namespace MazeSolver
             return (Math.Sqrt(Math.Pow(posVX - posObjX, 2) + Math.Pow(posVY - posObjY, 2)));
         }
 
-        private void printRoad(Map map, int timeSleepMS)
+        private void reconstructRoad(Map map, int timeSleepMS)
         {
             int tmpCout = _closedList.Peek().getCout();
             Cell tmpCell = _closedList.Peek();
+            Stack<Cell> finalStack = new Stack<Cell>();
 
             while (_closedList.Count() != 0)
             {
@@ -81,7 +82,7 @@ namespace MazeSolver
                     if (_closedList.Peek().getCout() == tmpCout)
                     {
                         if (_closedList.Peek().GetKindCell() != KindCell.START)
-                            changeKindCellUpdateAndWait(_closedList.Peek(), KindCell.ROAD, map.getMainWindow(), timeSleepMS);
+                            finalStack.Push(_closedList.Peek());
                         else
                             _closedList.Pop();
                         tmpCout--;
@@ -94,6 +95,8 @@ namespace MazeSolver
                 else
                     _closedList.Pop();
             }
+            while (finalStack.Count() != 0)
+                changeKindCellUpdateAndWait(finalStack.Pop(), KindCell.ROAD, map.getMainWindow(), timeSleepMS);
         }
 
         private Boolean checkConnection(Cell tmpCell, Cell currentCell)
