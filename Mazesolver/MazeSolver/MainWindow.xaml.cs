@@ -31,7 +31,7 @@ namespace MazeSolver
         private String _directoryMazeName = "/map_maze/";
         private Thread _threadSolver = null;
         private Dictionary<String, ISolver> _allSolver = new Dictionary<String, ISolver>();
-        private int _timeSleep = 100;
+        private int _timeSleep = 0;
         private IGenerator _gen = new ScriptGenerator();
 
         public MainWindow()
@@ -47,6 +47,7 @@ namespace MazeSolver
         {            
             _allSolver.Add(DeadEndFilling.staticGetName(), new DeadEndFilling());
             _allSolver.Add(BackTracking.staticGetName(), new BackTracking());
+            _allSolver.Add(Astar.staticGetName(), new Astar());
 
             foreach (KeyValuePair<String, ISolver> entry in _allSolver)
                 listViewSolver.Items.Add(entry.Key);
@@ -210,6 +211,7 @@ namespace MazeSolver
                     rect.Height = ((CanvasMaze.ActualHeight - (2 * startPosY)) / map.Count());
                     rect.Stroke = new SolidColorBrush(Colors.Black);
                     rect.Fill = new SolidColorBrush(_tabColorsKindCell[cell.GetKindCell()]);
+                    rect.ToolTip = "X = " + cell.getPos().getX() + " Y = " + cell.getPos().getY();
                     Canvas.SetLeft(rect, startPosX + (rect.Width * x));
                     Canvas.SetTop(rect, startPosY + (rect.Height * y));
                     cell.setRect(rect);

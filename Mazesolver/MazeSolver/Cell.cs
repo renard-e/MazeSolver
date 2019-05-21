@@ -32,6 +32,8 @@ namespace MazeSolver
         private KindCell _kindCell;
         private Pos _pos = new Pos();
         private Rectangle _rect = null;
+        private int _heuristique = 0;
+        private int _cout = 0;
 
         public Cell(KindCell kindCell)
         {
@@ -71,9 +73,19 @@ namespace MazeSolver
             }
         }
 
+        public Dictionary<Direction, Cell> getEnv()
+        {
+            return (_env);
+        }
+
         public void setPos(Pos newPos)
         {
             _pos = newPos;
+        }
+
+        public Pos getPos()
+        {
+            return (_pos);
         }
 
         public KindCell GetKindCell()
@@ -174,6 +186,26 @@ namespace MazeSolver
         public Cell getCelldir(Direction dir)
         {
             return (_env[dir]);
+        }
+
+        public void setHeuristique(int newHeuristique)
+        {
+            _heuristique = newHeuristique;
+        }
+
+        public int getHeuristique()
+        {
+            return (_heuristique);
+        }
+
+        public void setCout(int newCout)
+        {
+            _cout = newCout;
+        }
+
+        public int getCout()
+        {
+            return (_cout);
         }
     }
 }

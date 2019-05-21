@@ -15,6 +15,7 @@ namespace MazeSolver
         private MainWindow _win = null;
         private String _mapPathToFile = "None";
         private Cell _startCell;
+        private Cell _endCell;
 
         public Map(MainWindow win)
         {
@@ -125,6 +126,8 @@ namespace MazeSolver
                         _map[y][x].setEnv(Direction.DOWN, _map[y + 1][x]);
                     if (_map[y][x].GetKindCell() == KindCell.START)
                         _startCell = _map[y][x];
+                    if (_map[y][x].GetKindCell() == KindCell.END)
+                        _endCell = _map[y][x];
                     x++;
                 }
                 y++;
@@ -185,6 +188,11 @@ namespace MazeSolver
         public Cell getStartCell()
         {
             return (_startCell);
+        }
+
+        public Cell getEndCell()
+        {
+            return (_endCell);
         }
 
     }

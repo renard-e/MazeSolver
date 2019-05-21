@@ -60,6 +60,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Astar.cs" />
     <Compile Include="IGenerator.cs" />
     <Compile Include="ScriptGenerator.cs" />
     <Compile Include="Solver.cs" />
