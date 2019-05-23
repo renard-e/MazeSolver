@@ -193,8 +193,8 @@ namespace MazeSolver
 
         public void drawMap(Map mapObj)
         {
-            int startPosX = 20;
-            int startPosY = 20;
+            int startPosX = 10;
+            int startPosY = 10;
             int x = 0;
             int y = 0;
             List<List<Cell>> map = mapObj.getMap();

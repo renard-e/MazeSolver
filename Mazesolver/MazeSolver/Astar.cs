@@ -27,8 +27,6 @@ namespace MazeSolver
         {
             startEndTimer(0);
             solveMaze(map, timeSleepMS);
-            map.getMainWindow().setState("Finish");
-            map.getMainWindow().printInfo("Solver Work during : " + startEndTimer(1), Colors.Green);
         }
 
         private void solveMaze(Map map, int timeSleepMS)
@@ -98,6 +96,8 @@ namespace MazeSolver
                 else
                     _closedList.Pop();
             }
+            map.getMainWindow().setState("Finish");
+            map.getMainWindow().printInfo("Solver Work during : " + startEndTimer(1), Colors.Green);
             while (finalStack.Count() != 0)
                 changeKindCellUpdateAndWait(finalStack.Pop(), KindCell.ROAD, map.getMainWindow(), timeSleepMS);
         }
