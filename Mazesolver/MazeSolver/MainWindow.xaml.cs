@@ -32,7 +32,7 @@ namespace MazeSolver
         private Thread _threadSolver = null;
         private Dictionary<String, ISolver> _allSolver = new Dictionary<String, ISolver>();
         private int _timeSleep = 0;
-        private IGenerator _gen = new ScriptGenerator();
+        private IGenerator _gen = new genAntoine();
 
         public MainWindow()
         {
@@ -83,8 +83,8 @@ namespace MazeSolver
 
             if ((checkInputMaze(x, y, fileName)) == false)
             {
-                MessageBox.Show("Error : x > 1 and y > 1 and x <= 69 and y <= 69 or the file already exists", "Error Input Map", MessageBoxButton.OK, MessageBoxImage.Warning);
-                printInfo("Error : x > 1 and y > 1 and x <= 69 and y <= 69 or the file already exists", Colors.Red);
+                MessageBox.Show("Error : x > 1 and y > 1 and x <= 100 and y <= 100 or the file already exists", "Error Input Map", MessageBoxButton.OK, MessageBoxImage.Warning);
+                printInfo("Error : x > 1 and y > 1 and x <= 100 and y <= 100 or the file already exists", Colors.Red);
             }
             else if ((_gen.makeMaze(int.Parse(x), int.Parse(y), Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + _directoryMazeName + fileName)) == false)
             {
@@ -102,7 +102,7 @@ namespace MazeSolver
         {
             if (String.IsNullOrEmpty(x) || String.IsNullOrEmpty(y) || checkNumber(x) || checkNumber(y))
                 return (false);
-            if (int.Parse(x) <= 1 || int.Parse(y) <= 1 || int.Parse(x) > 69 || int.Parse(y) > 69)
+            if (int.Parse(x) <= 1 || int.Parse(y) <= 1 || int.Parse(x) > 100 || int.Parse(y) > 100)
                 return (false);
             if (File.Exists(Directory.GetParent(System.IO.Directory.GetCurrentDirectory()).Parent.Parent.FullName + _directoryMazeName + fileName))
                 return (false);

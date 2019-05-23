@@ -61,6 +61,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Astar.cs" />
+    <Compile Include="genAntoine.cs" />
     <Compile Include="IGenerator.cs" />
     <Compile Include="ScriptGenerator.cs" />
     <Compile Include="Solver.cs" />
