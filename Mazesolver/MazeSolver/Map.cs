@@ -195,6 +195,20 @@ namespace MazeSolver
             return (_endCell);
         }
 
+        public void clearMap()
+        {
+            foreach (List<Cell> listCell in _map)
+            {
+                foreach (Cell cell in listCell)
+                {
+                    if (cell.GetKindCell() == KindCell.DEADEND || cell.GetKindCell() == KindCell.ROAD)
+                    {
+                        cell.setKindCell(KindCell.EMPTY);
+                        cell.getRect().Fill = new SolidColorBrush(Colors.White);
+                    }
+                }
+            }
+        }
     }
 }
 

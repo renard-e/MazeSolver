@@ -70,9 +70,14 @@ namespace MazeSolver
                 _threadSolver.Abort();
         }
 
-        private void button_clear_info(object sender, RoutedEventArgs e)
+        private void button_clear_all(object sender, RoutedEventArgs e)
         {
             clearInfo();
+            if (_map != null)
+            {
+                _map.clearMap();
+                CanvasMaze.UpdateLayout();
+            }
         }
 
         private void button_generate_maze(object sender, RoutedEventArgs e)
